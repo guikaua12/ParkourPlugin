@@ -1,6 +1,7 @@
 package me.approximations.parkourPlugin.util;
 
 import fr.mrmicky.fastboard.FastBoard;
+import lombok.Getter;
 import me.approximations.parkourPlugin.Main;
 import me.approximations.parkourPlugin.dao.UserDao;
 import me.approximations.parkourPlugin.dao.repository.UserRepository;
@@ -9,9 +10,7 @@ import me.approximations.parkourPlugin.model.User;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 //Parkour
 //
@@ -27,7 +26,10 @@ import java.util.Set;
 public class ScoreboardUtils {
     private static final UserRepository userRepository = Main.getUserRepository();
     private static final UserDao userDao = Main.getUserDao();
-    private static final TopManager topManager = new TopManager();
+    private static final TopManager topManager = Main.getTopManager();
+
+    @Getter
+    private static final Map<UUID, FastBoard> scores = new HashMap<>();
     public static void show(Player player) {
         User user = userDao.getUsers().get(player.getUniqueId());
         TimeUtils time = new TimeUtils(user.getBestTime());
@@ -36,16 +38,18 @@ public class ScoreboardUtils {
 
         FastBoard score = new FastBoard(player);
         score.updateTitle("Parkour");
+        //messy code but understandable
         score.updateLines(
                 "",
                 "Best Attempt: "+time.getTimeFormatted(),
                 "",
                 "Leaderboard:",
-                "  #1 - "+(topManager.getTop(1) == null ? "None" : Bukkit.getOfflinePlayer(topManager.getTop(1).getUuid()).getName())+" - "+(topManager.getTop(1) == null ? "None" : TimeUtils.formatTime(topManager.getTop(1).getBestTime())),
-                "  #2 - "+(topManager.getTop(2) == null ? "None" : Bukkit.getOfflinePlayer(topManager.getTop(2).getUuid()).getName())+" - "+(topManager.getTop(2) == null ? "None" : TimeUtils.formatTime(topManager.getTop(2).getBestTime())),
-                "  #3 - "+(topManager.getTop(3) == null ? "None" : Bukkit.getOfflinePlayer(topManager.getTop(3).getUuid()).getName())+" - "+(topManager.getTop(3) == null ? "None" : TimeUtils.formatTime(topManager.getTop(3).getBestTime())),
-                "  #4 - "+(topManager.getTop(4) == null ? "None" : Bukkit.getOfflinePlayer(topManager.getTop(4).getUuid()).getName())+" - "+(topManager.getTop(4) == null ? "None" : TimeUtils.formatTime(topManager.getTop(4).getBestTime())),
-                "  #5 - "+(topManager.getTop(5) == null ? "None" : Bukkit.getOfflinePlayer(topManager.getTop(5).getUuid()).getName())+" - "+(topManager.getTop(5) == null ? "None" : TimeUtils.formatTime(topManager.getTop(5).getBestTime()))
+                "  #1 - "+(topManager.getTop(1) == null ? "N/A" : (topManager.getTop(1).getBestTime() < 1 ? "N/A" : Bukkit.getOfflinePlayer(topManager.getTop(1).getUuid()).getName()))+" - "+(topManager.getTop(1) == null ? "N/A" : TimeUtils.formatTime(topManager.getTop(1).getBestTime())),
+                "  #2 - "+(topManager.getTop(2) == null ? "N/A" : (topManager.getTop(2).getBestTime() < 1 ? "N/A" : Bukkit.getOfflinePlayer(topManager.getTop(1).getUuid()).getName()))+" - "+(topManager.getTop(2) == null ? "N/A" : TimeUtils.formatTime(topManager.getTop(2).getBestTime())),
+                "  #3 - "+(topManager.getTop(3) == null ? "N/A" : (topManager.getTop(3).getBestTime() < 1 ? "N/A" : Bukkit.getOfflinePlayer(topManager.getTop(1).getUuid()).getName()))+" - "+(topManager.getTop(3) == null ? "N/A" : TimeUtils.formatTime(topManager.getTop(3).getBestTime())),
+                "  #4 - "+(topManager.getTop(4) == null ? "N/A" : (topManager.getTop(4).getBestTime() < 1 ? "N/A" : Bukkit.getOfflinePlayer(topManager.getTop(1).getUuid()).getName()))+" - "+(topManager.getTop(4) == null ? "N/A" : TimeUtils.formatTime(topManager.getTop(4).getBestTime())),
+                "  #5 - "+(topManager.getTop(5) == null ? "N/A" : (topManager.getTop(5).getBestTime() < 1 ? "N/A" : Bukkit.getOfflinePlayer(topManager.getTop(1).getUuid()).getName()))+" - "+(topManager.getTop(5) == null ? "N/A" : TimeUtils.formatTime(topManager.getTop(5).getBestTime()))
                 );
+        scores.put(player.getUniqueId(), score);
     }
 }

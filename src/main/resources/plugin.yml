@@ -2,3 +2,5 @@ name: ParkourPlugin
 main: me.approximations.parkourPlugin.Main
 version: 1.0.0
 author: Approximations
+softdepend:
+  - WorldGuard

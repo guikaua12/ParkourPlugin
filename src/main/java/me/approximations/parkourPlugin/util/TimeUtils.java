@@ -37,7 +37,7 @@ public class TimeUtils {
             sb.append(seconds).append("").append("s").append(" ");
         }
         String diff = sb.toString();
-        return diff.isEmpty() ? "now" : diff;
+        return diff.isEmpty() ? "N/A" : diff;
     }
 
     public String getTimeFormatted() {
@@ -55,6 +55,6 @@ public class TimeUtils {
             sb.append(seconds).append("").append("s").append(" ");
         }
         String diff = sb.toString();
-        return diff.isEmpty() ? "now" : diff;
+        return diff.isEmpty() ? "N/A" : diff;
     }
 }

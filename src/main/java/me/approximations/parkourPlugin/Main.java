@@ -9,6 +9,7 @@ import me.approximations.parkourPlugin.dao.repository.UserRepository;
 import me.approximations.parkourPlugin.dao.scheduler.AutoSave;
 import me.approximations.parkourPlugin.listener.PlayerListener;
 import me.approximations.parkourPlugin.manager.ParkourManager;
+import me.approximations.parkourPlugin.manager.TopManager;
 import me.approximations.parkourPlugin.model.User;
 import me.approximations.parkourPlugin.util.JsonUtils;
 import org.bukkit.Bukkit;
@@ -29,6 +30,10 @@ public class Main extends JavaPlugin {
     @Getter
     private static UserDao userDao;
 
+    @Getter
+    private static TopManager topManager;
+
+
     @Override
     public void onEnable() {
         instance = this;
@@ -36,6 +41,8 @@ public class Main extends JavaPlugin {
         JsonUtils.saveCheckpointsFile();
         parkourManager = new ParkourManager();
         parkourManager.init();
+        topManager = new TopManager();
+        topManager.init(this);
         setupListener();
     }
 

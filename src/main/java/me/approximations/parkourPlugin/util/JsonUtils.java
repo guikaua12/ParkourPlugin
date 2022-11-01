@@ -1,9 +1,5 @@
 package me.approximations.parkourPlugin.util;
 
-import com.google.common.collect.ImmutableMap;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.stream.JsonReader;
 import lombok.Getter;
 import me.approximations.parkourPlugin.Main;
 import org.bukkit.Bukkit;
@@ -20,8 +16,6 @@ import java.util.*;
 
 public class JsonUtils {
     private static final Main plugin = Main.getInstance();
-    @Getter
-    private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
     private static final File checkpointsFile = new File(plugin.getDataFolder(), "checkpoints.json");
 
 

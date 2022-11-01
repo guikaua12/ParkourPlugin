@@ -1,5 +1,12 @@
 package me.approximations.parkourPlugin.listener;
 
+import com.sk89q.worldedit.bukkit.BukkitAdapter;
+import com.sk89q.worldedit.util.Location;
+import com.sk89q.worldguard.WorldGuard;
+import com.sk89q.worldguard.protection.ApplicableRegionSet;
+import com.sk89q.worldguard.protection.regions.ProtectedRegion;
+import com.sk89q.worldguard.protection.regions.RegionContainer;
+import com.sk89q.worldguard.protection.regions.RegionQuery;
 import lombok.RequiredArgsConstructor;
 import me.approximations.parkourPlugin.Main;
 import me.approximations.parkourPlugin.dao.UserDao;
@@ -17,6 +24,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 @RequiredArgsConstructor
 public class PlayerListener implements Listener {
@@ -24,11 +33,20 @@ public class PlayerListener implements Listener {
     private final UserDao userDao = Main.getUserDao();
 
     @EventHandler
-    public void onJoin(PlayerJoinEvent e) {
-        Bukkit.getServer().getScheduler().runTaskLater(Main.getInstance(), () -> {
-            Player p = e.getPlayer();
-            ScoreboardUtils.show(p);
-        }, 20L);
+    public void onPlayerMove(PlayerMoveEvent e) {
+        if(e.getFrom().distance(e.getTo()) == 0D) return;
+        Player p = e.getPlayer();
+
+        Location loc = BukkitAdapter.adapt(p.getLocation());
+        RegionContainer container = WorldGuard.getInstance().getPlatform().getRegionContainer();
+        RegionQuery query = container.createQuery();
+        ApplicableRegionSet set = query.getApplicableRegions(loc);
+        for (ProtectedRegion region : set.getRegions()) {
+            if(region.getId().equalsIgnoreCase("parkour_region")) {
+                if(ScoreboardUtils.getScores().containsKey(p.getUniqueId())) return;
+                ScoreboardUtils.show(p);
+            }
+        }
     }
 
     @EventHandler
@@ -75,6 +93,14 @@ public class PlayerListener implements Listener {
             }
             parkourManager.saveLastCheckpoint(p, b.getLocation());
             p.sendMessage(ChatColor.GREEN+"You saved your checkpoint.");
+        }
+    }
+
+    @EventHandler
+    public void onPlayerQuit(PlayerQuitEvent e) {
+        Player p = e.getPlayer();
+        if(ScoreboardUtils.getScores().containsKey(p.getUniqueId())) {
+            ScoreboardUtils.getScores().remove(p.getUniqueId());
         }
     }
 }
