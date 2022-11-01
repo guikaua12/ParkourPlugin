@@ -1,0 +1,8 @@
+database:
+  #types: mysql, sqlite
+  type: 'mysql'
+  ip: 'localhost:3306'
+  db: 'test'
+  user: 'root'
+  password: ''
+  table: 'parkourPlugin'
