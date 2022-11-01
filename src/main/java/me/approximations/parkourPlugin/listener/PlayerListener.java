@@ -102,5 +102,8 @@ public class PlayerListener implements Listener {
         if(ScoreboardUtils.getScores().containsKey(p.getUniqueId())) {
             ScoreboardUtils.getScores().remove(p.getUniqueId());
         }
+        if(parkourManager.getPlayers().containsKey(p.getUniqueId())) {
+            parkourManager.removePlayer(p);
+        }
     }
 }
