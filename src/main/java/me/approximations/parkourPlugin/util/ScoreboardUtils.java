@@ -44,11 +44,11 @@ public class ScoreboardUtils {
                 "Best Attempt: "+time.getTimeFormatted(),
                 "",
                 "Leaderboard:",
-                "  #1 - "+(topManager.getTop(1) == null ? "N/A" : (topManager.getTop(1).getBestTime() < 1 ? "N/A" : Bukkit.getOfflinePlayer(topManager.getTop(1).getUuid()).getName()))+" - "+(topManager.getTop(1) == null ? "N/A" : TimeUtils.formatTime(topManager.getTop(1).getBestTime())),
-                "  #2 - "+(topManager.getTop(2) == null ? "N/A" : (topManager.getTop(2).getBestTime() < 1 ? "N/A" : Bukkit.getOfflinePlayer(topManager.getTop(1).getUuid()).getName()))+" - "+(topManager.getTop(2) == null ? "N/A" : TimeUtils.formatTime(topManager.getTop(2).getBestTime())),
-                "  #3 - "+(topManager.getTop(3) == null ? "N/A" : (topManager.getTop(3).getBestTime() < 1 ? "N/A" : Bukkit.getOfflinePlayer(topManager.getTop(1).getUuid()).getName()))+" - "+(topManager.getTop(3) == null ? "N/A" : TimeUtils.formatTime(topManager.getTop(3).getBestTime())),
-                "  #4 - "+(topManager.getTop(4) == null ? "N/A" : (topManager.getTop(4).getBestTime() < 1 ? "N/A" : Bukkit.getOfflinePlayer(topManager.getTop(1).getUuid()).getName()))+" - "+(topManager.getTop(4) == null ? "N/A" : TimeUtils.formatTime(topManager.getTop(4).getBestTime())),
-                "  #5 - "+(topManager.getTop(5) == null ? "N/A" : (topManager.getTop(5).getBestTime() < 1 ? "N/A" : Bukkit.getOfflinePlayer(topManager.getTop(1).getUuid()).getName()))+" - "+(topManager.getTop(5) == null ? "N/A" : TimeUtils.formatTime(topManager.getTop(5).getBestTime()))
+                "  #1 - "+(topManager.getTop(1) == null ? "N/A" : topManager.getTop(5).getName())+" - "+(topManager.getTop(1) == null ? "N/A" : TimeUtils.formatTime(topManager.getTop(1).getBestTime())),
+                "  #2 - "+(topManager.getTop(2) == null ? "N/A" : topManager.getTop(5).getName())+" - "+(topManager.getTop(2) == null ? "N/A" : TimeUtils.formatTime(topManager.getTop(2).getBestTime())),
+                "  #3 - "+(topManager.getTop(3) == null ? "N/A" : topManager.getTop(5).getName())+" - "+(topManager.getTop(3) == null ? "N/A" : TimeUtils.formatTime(topManager.getTop(3).getBestTime())),
+                "  #4 - "+(topManager.getTop(4) == null ? "N/A" : topManager.getTop(5).getName())+" - "+(topManager.getTop(4) == null ? "N/A" : TimeUtils.formatTime(topManager.getTop(4).getBestTime())),
+                "  #5 - "+(topManager.getTop(5) == null ? "N/A" : topManager.getTop(5).getName())+" - "+(topManager.getTop(5) == null ? "N/A" : TimeUtils.formatTime(topManager.getTop(5).getBestTime()))
                 );
         scores.put(player.getUniqueId(), score);
     }

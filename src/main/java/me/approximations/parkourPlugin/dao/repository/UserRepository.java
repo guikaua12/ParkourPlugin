@@ -85,6 +85,6 @@ public class UserRepository{
     }
 
     public Set<User> getTop5() {
-        return sqlExecutor.queryMany("SELECT * FROM "+TABLE+" ORDER BY bestTime ASC LIMIT 5;", User.class);
+        return sqlExecutor.queryMany("SELECT * FROM "+TABLE+" WHERE NOT bestTime = -1 ORDER BY bestTime ASC LIMIT 5;", User.class);
     }
 }
