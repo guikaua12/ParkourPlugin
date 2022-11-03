@@ -23,7 +23,7 @@ public class UserRepository{
 
 
     public void createTable() {
-        sqlExecutor.execute("CREATE TABLE IF NOT EXISTS "+TABLE+"(uuid VARCHAR(72), bestTime BIGINT);");
+        sqlExecutor.execute("CREATE TABLE IF NOT EXISTS "+TABLE+"(uuid VARCHAR(72) PRIMARY KEY, bestTime BIGINT);");
     }
 
     public void insertOrUpdate(User user) {
